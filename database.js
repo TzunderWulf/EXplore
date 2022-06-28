@@ -1,11 +1,37 @@
-// init database
+import * as SQLite from 'expo-sqlite';
 
-// add something to database
+const db = SQLite.openDatabase('db.testDb')
 
-// remove something from database
+const DatabaseProvider = () => {
 
-// edit something from database
+    /**
+    * When app starts up creates database with one table items.
+    */
+    const initDatabase = () => {
+        db.transaction(tx => {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, text TEXT)')
+        });
+        console.log(`Database created!`)
+    }
 
-// get everything from database
+    const getItems = () => {
 
-// remove everything from database
+    }
+
+    const addItem = () => {
+
+    }
+
+    const editItem = () => {
+
+    }
+
+    const deleteItem = () => {
+
+    }
+
+    const deleteItems = () => {
+
+    }
+
+}

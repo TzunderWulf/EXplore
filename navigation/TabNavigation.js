@@ -5,10 +5,13 @@ import { Map } from "../screens/Map";
 import { List } from "../screens/List";
 import { NotesStack } from "./NotesStackNavigation";
 import { SettingsStack } from "./SettingsStackNavigation";
+import { useTheme } from '../themes/themesProvider';
 
 const Tab = createBottomTabNavigator();
 
 export const TabNavigation = () => {
+    const { theme } = useTheme();
+
     return (
         <Tab.Navigator
             initialRouteName='List'
@@ -16,10 +19,10 @@ export const TabNavigation = () => {
                 tabBarShowLabel: false,
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: "#0f0f11",
+                    backgroundColor: theme.navigation.backgroundColor,
                 },
-                tabBarActiveTintColor: "#AC371D",
-                tabBarInactiveTintColor: "#808080",
+                tabBarActiveTintColor: theme.navigation.active,
+                tabBarInactiveTintColor: theme.navigation.inactive,
             }}>
             <Tab.Screen
                 name="Map"

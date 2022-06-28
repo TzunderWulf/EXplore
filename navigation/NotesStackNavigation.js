@@ -4,12 +4,21 @@ import { Notes } from "../screens/Notes";
 import { AddNote } from "../screens/crud-notes/AddNote";
 import { Note } from "../screens/crud-notes/Note";
 import { EditNote } from "../screens/crud-notes/EditNote";
+import { useTheme } from '../themes/themesProvider';
 
 const Stack = createStackNavigator();
 
 export const NotesStack = () => {
+    const { theme } = useTheme();
+
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: theme.navigation.backgroundColor,
+                },
+                headerTintColor: theme.textColor
+            }}>
             <Stack.Screen
                 name="Notes"
                 component={Notes}
