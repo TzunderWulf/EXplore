@@ -80,7 +80,7 @@ export const Notes = ({ navigation }) => {
                 buttonText="Create new note"
                 icon="md-add-circle"
                 onPress={() => navigation.navigate("Add note")} />
-            {notes.length == 0 ? <CustomText shownText="No notes" /> : (
+            {notes.length == 0 ? <CustomText shownText="No notes found." customStyle={styles.text} /> : (
                 <FlatList
                     data={notes}
                     renderItem={renderItem} />

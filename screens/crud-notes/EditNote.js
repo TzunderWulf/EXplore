@@ -47,7 +47,7 @@ export const EditNote = ({ route, navigation }) => {
                 style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
                 value={title}
                 onChangeText={changeTitle}
-                placeholderTextColor={theme.textColor}
+                placeholderTextColor={theme.navigation.inactive}
                 placeholder="Title for note, ex. New gym"
             />
             <TextInput
@@ -56,7 +56,7 @@ export const EditNote = ({ route, navigation }) => {
                 multiline
                 numberOfLines={6}
                 onChangeText={changeText}
-                placeholderTextColor={theme.textColor}
+                placeholderTextColor={theme.navigation.inactive}
                 placeholder="Text, ex. Found new gym, should report."
             />
             <CustomButton
@@ -83,6 +83,8 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         marginVertical: 10,
+        fontFamily: "Ubuntu_500Medium",
+        fontSize: 20,
     },
     inputMulti: {
         paddingVertical: 20,

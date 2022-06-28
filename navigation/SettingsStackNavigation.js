@@ -15,7 +15,10 @@ export const SettingsStack = () => {
                 headerStyle: {
                     backgroundColor: theme.navigation.backgroundColor,
                 },
-                headerTintColor: theme.textColor
+                headerTintColor: theme.textColor,
+                headerTitleStyle: {
+                    fontFamily: "Ubuntu_500Medium"
+                }
             }}>
             <Stack.Screen
                 name="Settings"

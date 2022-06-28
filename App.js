@@ -1,6 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { Ubuntu_500Medium } from '@expo-google-fonts/ubuntu';
+import { Koulen_400Regular } from '@expo-google-fonts/koulen';
+import { useFonts } from 'expo-font';
 import * as SQLite from 'expo-sqlite';
+import * as SplashScreen from 'expo-splash-screen';
+import { ActivityIndicator } from "react-native";
 
 import { TabNavigation } from "./navigation/TabNavigation";
 import ThemesProvider from './themes/themesProvider';
@@ -21,11 +26,20 @@ export default function App() {
     initDatabase();
   }, [])
 
-  return (
-    <ThemesProvider>
-      <NavigationContainer>
-        <TabNavigation />
-      </NavigationContainer>
-    </ThemesProvider>
-  );
+  let [fontsLoaded, error] = useFonts({
+    Ubuntu_500Medium,
+    Koulen_400Regular
+  });
+
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" color="#DC143C" />
+  } else {
+    return (
+      <ThemesProvider>
+        <NavigationContainer>
+          <TabNavigation />
+        </NavigationContainer>
+      </ThemesProvider>
+    );
+  }
 }

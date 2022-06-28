@@ -7,6 +7,6 @@ export const CustomText = ({ shownText, customStyle }) => {
     const { theme } = useTheme();
 
     return (
-        <Text style={[customStyle, { color: theme.textColor }]}>{shownText}</Text>
+        <Text style={[customStyle, { color: theme.textColor, fontFamily: "Ubuntu_500Medium" }]}>{shownText}</Text>
     );
 }
