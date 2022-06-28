@@ -4,11 +4,13 @@ import * as SQLite from 'expo-sqlite';
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomText } from "../../custom-components/CustomText";
+import { useTheme } from '../../themes/themesProvider';
 
 const db = SQLite.openDatabase('db.testDb')
 
 export const Note = ({ navigation, route }) => {
     const [note, setNote] = useState({});
+    const { theme } = useTheme();
 
     const getNote = (id) => {
         db.transaction(tx => {
@@ -27,12 +29,12 @@ export const Note = ({ navigation, route }) => {
     }, [])
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             {note != {} && (
                 <View>
                     <Heading
                         shownText={"Note #" + note.id}
-                        customStyle={[styles.screenHeading, { borderBottomColor: "#18191b" }]}
+                        customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                         size={50} />
                     <View style={styles.noteTitle}>
                         <CustomText

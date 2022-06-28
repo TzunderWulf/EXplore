@@ -4,11 +4,13 @@ import { StyleSheet, View, Flatlist, ActivityIndicator } from 'react-native';
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
 import { FlatList } from "react-native-gesture-handler";
+import { useTheme } from '../themes/themesProvider';
 
 export const List = ({ navigation }) => {
 
     const [data, setData] = useState([]);
     const [isFetching, setFetching] = useState(true);
+    const { theme } = useTheme();
 
     /**
     * Fetch gyms from webservice.
@@ -31,7 +33,7 @@ export const List = ({ navigation }) => {
     */
     const renderItem = ({ item }) => {
         return (
-            <View style={styles.gym}>
+            <View style={[styles.gym, { borderBottomColor: theme.textColor }]}>
                 <Heading
                     shownText={item.name}
                     size={30} />
@@ -51,10 +53,10 @@ export const List = ({ navigation }) => {
     }, [])
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
                 shownText="All gyms"
-                customStyle={[styles.screenHeading, { borderBottomColor: "#18191b" }]}
+                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             {isFetching ? <ActivityIndicator size="large" color="#DC143C" /> : (
                 <FlatList
@@ -78,7 +80,6 @@ const styles = StyleSheet.create({
     },
     gym: {
         paddingVertical: 20,
-        borderBottomColor: "#18191b",
         borderBottomWidth: 4,
     }
 });

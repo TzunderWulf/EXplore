@@ -4,14 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { CustomText } from './CustomText';
 
+import { useTheme } from '../themes/themesProvider';
+
 export const CustomButton = ({ icon, buttonText, onPress, customStyle }) => {
+    const { theme } = useTheme();
 
     return (
         <TouchableOpacity
-            style={componentStyles.button}
+            style={[componentStyles.button, { borderColor: theme.textColor }]}
             onPress={onPress}>
             {icon != "" &&
-                <Ionicons name={icon} size={30} color="black" />}
+                <Ionicons name={icon} size={30} color={theme.textColor} />}
             {buttonText != "" &&
                 <CustomText shownText={buttonText} customStyle={componentStyles.buttonText} />}
         </TouchableOpacity>

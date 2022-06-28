@@ -4,10 +4,13 @@ import * as SQLite from 'expo-sqlite';
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
+import { useTheme } from '../themes/themesProvider';
 
 const db = SQLite.openDatabase('db.testDb')
 
 export const Settings = ({ navigation }) => {
+    const { theme } = useTheme();
+
     /**
      * Get all items from the database. Function runs only the screen gets
      * focused on, not when user move away.
@@ -19,12 +22,12 @@ export const Settings = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
                 shownText="Settings"
-                customStyle={[styles.screenHeading, { borderBottomColor: "#18191b" }]}
+                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
-            <View style={styles.setting}>
+            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
                 <Heading
                     shownText="Themes"
                     size={30} />
@@ -32,7 +35,7 @@ export const Settings = ({ navigation }) => {
                     buttonText="Change to darkmode"
                     onPress={() => console.log(`Changed`)} />
             </View>
-            <View style={styles.setting}>
+            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
                 <Heading
                     shownText="Notes"
                     size={30} />
@@ -40,7 +43,7 @@ export const Settings = ({ navigation }) => {
                     buttonText="Remove all (no confirmation)"
                     onPress={() => removeItems()} />
             </View>
-            <View style={styles.setting}>
+            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
                 <Heading
                     shownText="Languages"
                     size={30} />
@@ -66,7 +69,6 @@ const styles = StyleSheet.create({
         width: '100%',
 
         borderBottomWidth: 4,
-        borderBottomColor: "#18191b",
 
         paddingVertical: 10,
     },

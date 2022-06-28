@@ -6,10 +6,12 @@ const db = SQLite.openDatabase('db.testDb')
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomButton } from "../../custom-components/CustomButton";
+import { useTheme } from '../../themes/themesProvider';
 
 export const AddNote = ({ navigation }) => {
     const [title, changeTitle] = useState("");
     const [text, changeText] = useState("");
+    const { theme } = useTheme();
 
     const saveNote = () => {
         if (title == "" || text == "") {
@@ -23,22 +25,24 @@ export const AddNote = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
                 shownText="Notes"
-                customStyle={[styles.screenHeading, { borderBottomColor: "#18191b" }]}
+                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             <TextInput
-                style={styles.input}
+                style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
                 value={title}
                 onChangeText={changeTitle}
+                placeholderTextColor={theme.textColor}
                 placeholder="Title for note, ex. New gym"
             />
             <TextInput
-                style={[styles.input, styles.inputMulti]}
+                style={[styles.input, styles.inputMulti, { color: theme.textColor, borderColor: theme.textColor }]}
                 value={text}
                 multiline
                 numberOfLines={6}
+                placeholderTextColor={theme.textColor}
                 onChangeText={changeText}
                 placeholder="Text, ex. Found new gym, should report."
             />

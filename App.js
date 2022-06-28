@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import * as SQLite from 'expo-sqlite';
 
 import { TabNavigation } from "./navigation/TabNavigation";
+import ThemesProvider from './themes/themesProvider';
 
 const db = SQLite.openDatabase('db.testDb')
 
@@ -21,8 +22,10 @@ export default function App() {
   }, [])
 
   return (
-    <NavigationContainer>
-      <TabNavigation />
-    </NavigationContainer>
+    <ThemesProvider>
+      <NavigationContainer>
+        <TabNavigation />
+      </NavigationContainer>
+    </ThemesProvider>
   );
 }

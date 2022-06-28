@@ -7,12 +7,14 @@ import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
 import { CustomText } from "../custom-components/CustomText";
 import { FlatList } from "react-native-gesture-handler";
+import { useTheme } from '../themes/themesProvider';
 
 const db = SQLite.openDatabase('db.testDb')
 
 export const Notes = ({ navigation }) => {
     const [notes, setNotes] = useState([]);
     const isFocused = useIsFocused();
+    const { theme } = useTheme();
 
     /**
      * Get all items from the database. Function runs only the screen gets
@@ -69,10 +71,10 @@ export const Notes = ({ navigation }) => {
     }, [isFocused])
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
                 shownText="Notes"
-                customStyle={[styles.screenHeading, { borderBottomColor: "#18191b" }]}
+                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             <CustomButton
                 buttonText="Create new note"
