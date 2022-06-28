@@ -11,7 +11,7 @@ export const CustomButton = ({ icon, buttonText, onPress, customStyle }) => {
 
     return (
         <TouchableOpacity
-            style={[componentStyles.button, { borderColor: theme.textColor }]}
+            style={[componentStyles.button, customStyle, { borderColor: theme.textColor }]}
             onPress={onPress}>
             {icon != "" &&
                 <Ionicons name={icon} size={30} color={theme.textColor} />}

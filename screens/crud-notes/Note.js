@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Share } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomText } from "../../custom-components/CustomText";
+import { CustomButton } from "../../custom-components/CustomButton";
 import { useTheme } from '../../themes/themesProvider';
 
 const db = SQLite.openDatabase('db.testDb')
@@ -17,6 +18,25 @@ export const Note = ({ navigation, route }) => {
             tx.executeSql('SELECT * FROM items WHERE id = ?', [id], (_, { rows: { _array } }) => setNote(_array[0]))
         });
 
+    }
+
+    const onShare = async () => {
+        try {
+            const result = await Share.share({
+                "message": `I shared this note from the EXplore app:\n"${note.text}"`,
+            })
+            if (result.action == Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     useEffect(() => {
@@ -54,6 +74,11 @@ export const Note = ({ navigation, route }) => {
                         shownText={note.text}
                         customStyle={styles.content}
                     />
+                    <CustomButton
+                        icon="md-share-social"
+                        buttonText="Share this note"
+                        onPress={onShare}
+                        customStyle={styles.shareButton} />
                 </View>
             )}
         </View>
@@ -80,5 +105,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
+    },
+    shareButton: {
+        marginVertical: 20,
     }
 });
