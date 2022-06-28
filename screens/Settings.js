@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Alert, View } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 
 import { Heading } from "../custom-components/Heading";
@@ -9,7 +9,8 @@ import { useTheme } from '../themes/themesProvider';
 const db = SQLite.openDatabase('db.testDb')
 
 export const Settings = ({ navigation }) => {
-    const { theme } = useTheme();
+    const { theme, updateTheme } = useTheme();
+    const changeTheme = () => updateTheme(theme.themeMode);
 
     /**
      * Get all items from the database. Function runs only the screen gets
@@ -32,16 +33,19 @@ export const Settings = ({ navigation }) => {
                     shownText="Themes"
                     size={30} />
                 <CustomButton
-                    buttonText="Change to darkmode"
-                    onPress={() => console.log(`Changed`)} />
+                    buttonText={theme.themeMode !== 'default' ? "Change to dark mode" : "Change to light mode"}
+                    onPress={changeTheme} />
             </View>
             <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
                 <Heading
                     shownText="Notes"
                     size={30} />
                 <CustomButton
-                    buttonText="Remove all (no confirmation)"
-                    onPress={() => removeItems()} />
+                    buttonText="Remove all"
+                    onPress={() => {
+                        removeItems();
+                        Alert.alert("Removed all notes", "All notes have been removed.")
+                    }} />
             </View>
             <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
                 <Heading
