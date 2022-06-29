@@ -5,7 +5,7 @@ import { Map } from "../screens/Map";
 import { List } from "../screens/List";
 import { NotesStack } from "./NotesStackNavigation";
 import { SettingsStack } from "./SettingsStackNavigation";
-import { useTheme } from '../themes/themesProvider';
+import { useTheme } from "../themes/themesProvider";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +14,7 @@ export const TabNavigation = () => {
 
     return (
         <Tab.Navigator
-            initialRouteName='List'
+            initialRouteName="List"
             screenOptions={{
                 tabBarShowLabel: false,
                 headerShown: false,

@@ -1,30 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Flatlist, Image, ActivityIndicator, Dimensions } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { useIsFocused } from "@react-navigation/native";
 import i18n from "i18n-js";
-import NetInfo from "@react-native-community/netinfo";
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
-import { FlatList } from "react-native-gesture-handler";
-import { useTheme } from '../themes/themesProvider';
+import { useTheme } from "../themes/themesProvider";
 
 export const List = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [isFetching, setFetching] = useState(true);
     const { theme } = useTheme();
-    const isFocused = useIsFocused();
+    const isFocused = useIsFocused(); // Used to rerender the page
 
     const t = (key) => { return i18n.t(key) }
-
-    let connectedData = null;
-
-    const checkWifi = NetInfo.addEventListener(state => {
-        connectedData = state.isConnected;
-    });
-
-    //Check constantly for WiFi or any internet connection
-    useEffect(() => { checkWifi });
 
     /**
     * Fetch gyms from webservice.
@@ -65,38 +55,20 @@ export const List = ({ navigation }) => {
         getGyms();
     }, [])
 
-    if (connectedData) {
-        return (
-            <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-                <Heading
-                    shownText={t("list.heading")}
-                    customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
-                    size={50} />
-                {!connectedData && <Image
-                    style={styles.noWifiImage}
-                    source={require('../assets/download.jpg')}
-                />}
-                {isFetching ? <ActivityIndicator size="large" color="#DC143C" /> : (
-                    <FlatList
-                        data={data}
-                        keyExtractor={({ id }) => id}
-                        renderItem={renderItem} />
-                )}
-            </View>
-        );
-    } else {
-        return (
-            <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-                <Heading
-                    shownText={t("list.heading")}
-                    customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
-                    size={50} />
-                <Image
-                    style={styles.noWifiImage}
-                    source={require('../assets/download.jpg')} />
-            </View>
-        );
-    }
+    return (
+        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+            <Heading
+                shownText={t("list.heading")}
+                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
+                size={50} />
+            {isFetching ? <ActivityIndicator size="large" color="#DC143C" /> : (
+                <FlatList
+                    data={data}
+                    keyExtractor={({ id }) => id}
+                    renderItem={renderItem} />
+            )}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

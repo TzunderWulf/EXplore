@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import i18n from "i18n-js";
 
-import { useTheme } from '../../themes/themesProvider';
+import { useTheme } from "../../themes/themesProvider";
 import { CustomButton } from "../../custom-components/CustomButton";
 import { Heading } from "../../custom-components/Heading";
 import { FlatList } from "react-native-gesture-handler";
@@ -25,6 +25,10 @@ export const LanguageSelection = ({ navigation }) => {
     }
     ];
 
+    /**
+     * Save the new locale in Async Storage to keep locale,
+     * for restarting the app.
+     */
     const saveLocale = async () => {
         // Get new locale and save preference
         await AsyncStorage.setItem("userLocalePreference", i18n.locale);
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,

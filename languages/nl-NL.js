@@ -47,6 +47,8 @@ export const nl = {
         "title-input-placeholder": "Titel, bijv. Nieuwe gym",
         "text-input-placeholder": "Tekst, bijv. Ik heb een nieuwe gym gevonden.",
 
+        "error-empty": "Velden mogen niet leeg zijn.",
+
         "save-button": "Notitie opslaan",
     },
     "edit-note": {
@@ -56,6 +58,8 @@ export const nl = {
 
         "title-input-placeholder": "Titel, bijv. Nieuwe gym",
         "text-input-placeholder": "Tekst, bijv. Ik heb een nieuwe gym gevonden.",
+
+        "error-empty": "Velden mogen niet leeg zijn.",
 
         "save-button": "Aanpassingen opslaan",
     },

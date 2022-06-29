@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, TextInput } from 'react-native';
-import * as SQLite from 'expo-sqlite';
+import { StyleSheet, SafeAreaView, TextInput, Alert } from "react-native";
+import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
-const db = SQLite.openDatabase('db.testDb')
+const db = SQLite.openDatabase("db.testDb")
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomButton } from "../../custom-components/CustomButton";
-import { useTheme } from '../../themes/themesProvider';
+import { useTheme } from "../../themes/themesProvider";
 
 export const EditNote = ({ route, navigation }) => {
     const [title, changeTitle] = useState();
@@ -17,15 +17,21 @@ export const EditNote = ({ route, navigation }) => {
 
     const t = (key) => { return i18n.t(key) }
 
+    /**
+    * Update specific note with the help of the id. Also makes sure that 
+    * the inputs can't be empty.
+    * 
+    * @param id
+    */
     const updateItem = (id) => {
         if (title == "" || text == "") {
-            console.log('bad')
+            Alert.alert("Error", t("edit-note.error-empty"))
         } else {
             db.transaction(tx => {
-                tx.executeSql('UPDATE items SET title = ?, text = ? where id = ?', [title, text, id])
+                tx.executeSql("UPDATE items SET title = ?, text = ? where id = ?", [title, text, id])
             })
-            console.log('changed')
-            navigation.navigate('Notes');
+            console.log("changed")
+            navigation.navigate("Notes");
         }
     }
 
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,

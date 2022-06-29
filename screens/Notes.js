@@ -1,37 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FLatList } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
-import * as SQLite from 'expo-sqlite';
+import { StyleSheet, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { useIsFocused } from "@react-navigation/native";
+import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
 import { CustomText } from "../custom-components/CustomText";
-import { FlatList } from "react-native-gesture-handler";
-import { useTheme } from '../themes/themesProvider';
+import { useTheme } from "../themes/themesProvider";
 
-const db = SQLite.openDatabase('db.testDb')
+const db = SQLite.openDatabase("db.testDb")
 
 export const Notes = ({ navigation }) => {
     const [notes, setNotes] = useState([]);
-    const isFocused = useIsFocused();
     const { theme } = useTheme();
+    const isFocused = useIsFocused(); // Used to rerender page when in focus
 
     const t = (key) => { return i18n.t(key) }
 
     /**
-     * Get all items from the database. Function runs only the screen gets
-     * focused on, not when user move away.
+     * Get all items from the database. Function runs only when the screen 
+     * gets focused on, not when user moves away.
      */
     const getItems = () => {
         db.transaction(tx => {
-            tx.executeSql('SELECT * FROM items', null, (_, { rows: { _array } }) => setNotes(_array))
+            tx.executeSql("SELECT * FROM items", null, (_, { rows: { _array } }) => setNotes(_array))
         });
     }
 
     /**
-     * Get all items from the database. Function runs only the screen gets
-     * focused on, not when user move away.
+     * Delete a specific item from the database.
+     * 
+     * @param id
      */
     const removeItem = (id) => {
         db.transaction(tx => {
@@ -95,9 +96,9 @@ export const Notes = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: '10%',
+        paddingTop: "10%",
         paddingHorizontal: 30,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 30,
-        textAlign: 'center',
+        textAlign: "center",
         paddingVertical: 30,
     },
     note: {

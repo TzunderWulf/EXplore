@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ubuntu_500Medium } from '@expo-google-fonts/ubuntu';
-import { Koulen_400Regular } from '@expo-google-fonts/koulen';
-import { useFonts } from 'expo-font';
-import * as SQLite from 'expo-sqlite';
-import * as Localization from "expo-localization"
 import { ActivityIndicator } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ubuntu_500Medium } from "@expo-google-fonts/ubuntu";
+import { Koulen_400Regular } from "@expo-google-fonts/koulen";
+import { useFonts } from "expo-font";
+import * as SQLite from "expo-sqlite";
+import * as Localization from "expo-localization"
 import i18n from "i18n-js";
 
 import { TabNavigation } from "./navigation/TabNavigation";
@@ -20,25 +20,27 @@ i18n.translations = {
   "en-US": en,
   "nl-NL": nl,
   "de-DE": de,
-}
+};
 
+i18n.fallbacks = "en-US";
 
-i18n.fallbacks = true;
-
-const db = SQLite.openDatabase("db.testDb")
+const db = SQLite.openDatabase("db.testDb");
 
 export default function App() {
   /**
-   * Create initial table if that doesn't exist yet.
-   */
+  * Create initial table if that doesn't exist yet.
+  */
   const initDatabase = () => {
     db.transaction(tx => {
       tx.executeSql("CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, text TEXT)")
     });
   }
 
-  // get userLocalePreference
-
+  /**
+  * See what locale the app has to be set in. It checks if there
+  * was a previous preference. If not, it will check the device locale
+  * and save that for further use.
+  */
   const getLocale = async () => {
     const userLocalePreference = await AsyncStorage.getItem("userLocalePreference");
     if (userLocalePreference != null) {

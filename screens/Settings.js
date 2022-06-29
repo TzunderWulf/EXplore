@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Alert, View } from 'react-native';
-import * as SQLite from 'expo-sqlite';
-import { useIsFocused } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, Alert, View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
-import { useTheme } from '../themes/themesProvider';
+import { useTheme } from "../themes/themesProvider";
 
-const db = SQLite.openDatabase('db.testDb')
+const db = SQLite.openDatabase("db.testDb");
 
 export const Settings = ({ navigation }) => {
     const { theme, updateTheme } = useTheme();
     const changeTheme = () => updateTheme(theme.themeMode);
-    const [value, setValue] = useState(0); // integer state
-    const isFocused = useIsFocused();
+    const isFocused = useIsFocused(); // Used to rerender the page
 
     const t = (key) => { return i18n.t(key) };
 
     /**
-     * Get all items from the database. Function runs only the screen gets
-     * focused on, not when user move away.
-     */
+    * Removes all items from the datbase for user convenience.
+    */
     const removeItems = () => {
         db.transaction(tx => {
             tx.executeSql("DELETE FROM items", null);
@@ -39,7 +37,7 @@ export const Settings = ({ navigation }) => {
                     shownText={t("settings.option-themes")}
                     size={30} />
                 <CustomButton
-                    buttonText={theme.themeMode !== 'default' ? t("settings.change-dark-theme-button") : t("settings.change-light-theme-button")}
+                    buttonText={theme.themeMode !== "default" ? t("settings.change-dark-theme-button") : t("settings.change-light-theme-button")}
                     onPress={changeTheme} />
             </View>
             <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
@@ -68,15 +66,17 @@ export const Settings = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: '10%',
+
+        paddingTop: "10%",
         paddingHorizontal: 30,
-        backgroundColor: '#fff',
+
+        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,
     },
     setting: {
-        width: '100%',
+        width: "100%",
 
         borderBottomWidth: 4,
 

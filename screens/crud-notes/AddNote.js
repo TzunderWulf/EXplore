@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, TextInput } from 'react-native';
-import * as SQLite from 'expo-sqlite';
+import { StyleSheet, SafeAreaView, TextInput, Alert } from "react-native";
+import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
-const db = SQLite.openDatabase('db.testDb')
+const db = SQLite.openDatabase("db.testDb")
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomButton } from "../../custom-components/CustomButton";
-import { useTheme } from '../../themes/themesProvider';
+import { useTheme } from "../../themes/themesProvider";
 
 export const AddNote = ({ navigation }) => {
     const [title, changeTitle] = useState("");
@@ -16,14 +16,17 @@ export const AddNote = ({ navigation }) => {
 
     const t = (key) => { return i18n.t(key) }
 
-    const saveNote = () => {
+    /**
+    * Creates item in database.
+    */
+    const createItem = () => {
         if (title == "" || text == "") {
-            console.log('bad')
+            Alert.alert("Error", t("add-note.error-empty"))
         } else {
             db.transaction(tx => {
-                tx.executeSql('INSERT INTO items (title, text) values (?, ?)', [title, text])
+                tx.executeSql("INSERT INTO items (title, text) values (?, ?)", [title, text])
             })
-            navigation.navigate('Notes');
+            navigation.navigate("Notes");
         }
     }
 
@@ -58,7 +61,7 @@ export const AddNote = ({ navigation }) => {
             <CustomButton
                 buttonText={t("add-note.save-button")}
                 icon="md-checkmark-circle"
-                onPress={saveNote} />
+                onPress={createItem} />
         </SafeAreaView>
     );
 }
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,

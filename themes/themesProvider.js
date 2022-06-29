@@ -1,8 +1,8 @@
-import React, { useState, createContext, useEffect, useContext } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, createContext, useEffect, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { darkMode } from './available-themes/darkMode';
-import { lightMode } from './available-themes/lightMode';
+import { darkMode } from "./available-themes/darkMode";
+import { lightMode } from "./available-themes/lightMode";
 
 const ThemesContext = createContext();
 
@@ -11,15 +11,15 @@ const ThemesProvider = ({ children }) => {
     const [isLoadingTheme, setLoading] = useState(true);
 
     /**
-    * Find the current theme the app is in.
+    * Find the active theme.
     */
     const findThemeAsync = async () => {
-        const themeMode = await AsyncStorage.getItem('themeMode');
+        const themeMode = await AsyncStorage.getItem("themeMode");
 
         // If no theme is set, set it to the default theme: dark mode
         // (who uses light mode, pls put an end to that suffering)
         if (themeMode !== null) {
-            themeMode === 'default' ? setTheme(darkMode) : setTheme(lightMode);
+            themeMode === "default" ? setTheme(darkMode) : setTheme(lightMode);
             setLoading(false);
         }
 
@@ -31,11 +31,11 @@ const ThemesProvider = ({ children }) => {
     */
     const updateTheme = (currentTheme) => {
         // See what theme needs to be the new
-        const newTheme = currentTheme === 'default' ? lightMode : darkMode;
+        const newTheme = currentTheme === "default" ? lightMode : darkMode;
         setTheme(newTheme);
 
-        // Store the current theme in AsyncStorage
-        AsyncStorage.setItem('themeMode', newTheme.themeMode);
+        // Store the current theme in AsyncStorage for later reference
+        AsyncStorage.setItem("themeMode", newTheme.themeMode);
     }
 
     useEffect(() => {

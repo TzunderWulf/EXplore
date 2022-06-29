@@ -47,6 +47,8 @@ export const de = {
         "title-input-placeholder": "Titel, z.B. Neue gym",
         "text-input-placeholder": "Text, z.B. Ich habe eine neue gym gefunden.",
 
+        "error-empty": "Eingaben dürfen nicht leer sein.",
+
         "save-button": "Notiz speichern",
     },
     "edit-note": {
@@ -56,6 +58,8 @@ export const de = {
 
         "title-input-placeholder": "Titel, z.B. Neue gym",
         "text-input-placeholder": "Text, z.B. Ich habe eine neue gym gefunden.",
+
+        "error-empty": "Eingaben dürfen nicht leer sein.",
 
         "save-button": "Anpassungen speichern",
     },

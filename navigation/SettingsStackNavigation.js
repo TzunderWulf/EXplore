@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { Settings } from "../screens/Settings";
 import { LanguageSelection } from "../screens/settings-options/LanguageSelection";
-import { useTheme } from '../themes/themesProvider';
+import { useTheme } from "../themes/themesProvider";
 
 const Stack = createStackNavigator();
 

@@ -47,6 +47,8 @@ export const en = {
         "title-input-placeholder": "Title for note, ex. New gym",
         "text-input-placeholder": "Text, ex. Found new gym, should report.",
 
+        "error-empty": "Inputs can't be empty.",
+
         "save-button": "Save note",
     },
     "edit-note": {
@@ -56,6 +58,8 @@ export const en = {
 
         "title-input-placeholder": "Title for note, ex. New gym",
         "text-input-placeholder": "Text, ex. Found new gym, should report.",
+
+        "error-empty": "Inputs can't be empty.",
 
         "save-button": "Save edits",
     },
