@@ -31,6 +31,8 @@ export const de = {
     "notes": {
         "heading": "Notizen",
 
+        "no-notes": "Keine Notizen gefunden.",
+
         "create-button": "Notiz hinzufügen",
 
         "view-button": "Notiz ansehen",

@@ -31,6 +31,8 @@ export const nl = {
     "notes": {
         "heading": "Notities",
 
+        "no-notes": "Geen notities gevonden.",
+
         "create-button": "Maak nieuwe notitie",
 
         "view-button": "Bekijk notitie",

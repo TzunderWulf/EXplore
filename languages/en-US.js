@@ -31,6 +31,8 @@ export const en = {
     "notes": {
         "heading": "Notes",
 
+        "no-notes": "No notes found.",
+
         "create-button": "Create new note",
 
         "view-button": "View note",
