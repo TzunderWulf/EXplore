@@ -6,5 +6,6 @@ export const lightMode = {
         active: "#B6533D",
         inactive: "#808080",
     },
+    mapStyle: [],
     themeMode: "light",
 }

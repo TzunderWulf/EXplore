@@ -3,11 +3,14 @@ import { StyleSheet, Dimensions, ActivityIndicator, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
+import { useTheme } from "../themes/themesProvider";
+
 export const Map = ({ route }) => {
     const [data, setData] = useState([]);
     const [isFetching, setFetching] = useState(true);
     const [location, setLocation] = useState(null);
     const [region, setRegion] = useState(null);
+    const { theme } = useTheme();
 
     /**
     * Fetch gyms from webservice.
@@ -74,12 +77,14 @@ export const Map = ({ route }) => {
                 <MapView
                     style={styles.map}
                     region={region}
+                    customMapStyle={theme.mapStyle}
                 >
                     {location !== null &&
                         <Marker
                             key="user"
                             title="User's location"
                             coordinate={JSON.parse(location)}
+                            image={require('../assets/map-assets/user-pin.png')}
                         />
                     }
                     {data.map((item) => {
@@ -91,6 +96,7 @@ export const Map = ({ route }) => {
                                     longitude: item.long
                                 }}
                                 title={item.name}
+                                image={require('../assets/map-assets/gym-pin.png')}
                             />
                         );
                     })}
