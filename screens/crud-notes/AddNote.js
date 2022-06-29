@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, SafeAreaView, TextInput } from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import i18n from "i18n-js";
 
 const db = SQLite.openDatabase('db.testDb')
 
@@ -13,6 +14,8 @@ export const AddNote = ({ navigation }) => {
     const [text, changeText] = useState("");
     const { theme } = useTheme();
 
+    const t = (key) => { return i18n.t(key) }
+
     const saveNote = () => {
         if (title == "" || text == "") {
             console.log('bad')
@@ -24,10 +27,16 @@ export const AddNote = ({ navigation }) => {
         }
     }
 
+    useEffect(() => {
+        navigation.setOptions({
+            title: t("add-note.header-title")
+        })
+    }, [])
+
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
-                shownText="Notes"
+                shownText={t("add-note.heading")}
                 customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             <TextInput
@@ -35,7 +44,7 @@ export const AddNote = ({ navigation }) => {
                 value={title}
                 onChangeText={changeTitle}
                 placeholderTextColor={theme.navigation.inactive}
-                placeholder="Title for note, ex. New gym"
+                placeholder={t("add-note.title-input-placeholder")}
             />
             <TextInput
                 style={[styles.input, styles.inputMulti, { color: theme.textColor, borderColor: theme.textColor }]}
@@ -44,10 +53,10 @@ export const AddNote = ({ navigation }) => {
                 numberOfLines={6}
                 placeholderTextColor={theme.navigation.inactive}
                 onChangeText={changeText}
-                placeholder="Text, ex. Found new gym, should report."
+                placeholder={t("add-note.text-input-placeholder")}
             />
             <CustomButton
-                buttonText="Save new note"
+                buttonText={t("add-note.save-button")}
                 icon="md-checkmark-circle"
                 onPress={saveNote} />
         </SafeAreaView>

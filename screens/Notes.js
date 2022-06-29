@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, FLatList } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import * as SQLite from 'expo-sqlite';
+import i18n from "i18n-js";
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
@@ -15,6 +16,8 @@ export const Notes = ({ navigation }) => {
     const [notes, setNotes] = useState([]);
     const isFocused = useIsFocused();
     const { theme } = useTheme();
+
+    const t = (key) => { return i18n.t(key) }
 
     /**
      * Get all items from the database. Function runs only the screen gets
@@ -49,15 +52,15 @@ export const Notes = ({ navigation }) => {
                     shownText={item.title}
                     size={30} />
                 <CustomButton
-                    buttonText="View note"
+                    buttonText={t("notes.view-button")}
                     icon="md-reader"
                     onPress={() => navigation.navigate("View note", { id: item.id })} />
                 <CustomButton
-                    buttonText="Edit note"
+                    buttonText={t("notes.edit-button")}
                     icon="md-pencil"
                     onPress={() => navigation.navigate("Edit note", { id: item.id, title: item.title, text: item.text })} />
                 <CustomButton
-                    buttonText="Remove note"
+                    buttonText={t("notes.delete-button")}
                     icon="md-trash-bin"
                     onPress={() => removeItem(item.id)} />
             </View>
@@ -73,11 +76,11 @@ export const Notes = ({ navigation }) => {
     return (
         <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
-                shownText="Notes"
+                shownText={t("notes.heading")}
                 customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             <CustomButton
-                buttonText="Create new note"
+                buttonText={t("notes.create-button")}
                 icon="md-add-circle"
                 onPress={() => navigation.navigate("Add note")} />
             {notes.length == 0 ? <CustomText shownText="No notes found." customStyle={styles.text} /> : (

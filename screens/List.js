@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Flatlist, ActivityIndicator } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import i18n from "i18n-js";
 
 import { Heading } from "../custom-components/Heading";
 import { CustomButton } from "../custom-components/CustomButton";
@@ -7,10 +9,12 @@ import { FlatList } from "react-native-gesture-handler";
 import { useTheme } from '../themes/themesProvider';
 
 export const List = ({ navigation }) => {
-
     const [data, setData] = useState([]);
     const [isFetching, setFetching] = useState(true);
     const { theme } = useTheme();
+    const isFocused = useIsFocused();
+
+    const t = (key) => { return i18n.t(key) }
 
     /**
     * Fetch gyms from webservice.
@@ -25,7 +29,6 @@ export const List = ({ navigation }) => {
             .catch((error) => console.log(error));
     };
 
-
     /**
     * Function to render an item of the flatlist.
     *
@@ -38,7 +41,7 @@ export const List = ({ navigation }) => {
                     shownText={item.name}
                     size={30} />
                 <CustomButton
-                    buttonText="View gym on map"
+                    buttonText={t("list.locate-button")}
                     icon="md-location"
                     onPress={() => navigation.navigate('Map', {
                         latitude:
@@ -55,7 +58,7 @@ export const List = ({ navigation }) => {
     return (
         <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
             <Heading
-                shownText="All gyms"
+                shownText={t("list.heading")}
                 customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                 size={50} />
             {isFetching ? <ActivityIndicator size="large" color="#DC143C" /> : (

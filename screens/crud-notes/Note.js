@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Share } from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import i18n from "i18n-js";
 
 import { Heading } from "../../custom-components/Heading";
 import { CustomText } from "../../custom-components/CustomText";
@@ -12,6 +13,8 @@ const db = SQLite.openDatabase('db.testDb')
 export const Note = ({ navigation, route }) => {
     const [note, setNote] = useState({});
     const { theme } = useTheme();
+
+    const t = (key) => { return i18n.t(key) }
 
     const getNote = (id) => {
         db.transaction(tx => {
@@ -46,6 +49,10 @@ export const Note = ({ navigation, route }) => {
         } else {
             navigation.navigate("Notes")
         }
+
+        navigation.setOptions({
+            title: t("view-note.header-title")
+        })
     }, [])
 
     return (
@@ -53,21 +60,11 @@ export const Note = ({ navigation, route }) => {
             {note != {} && (
                 <View>
                     <Heading
-                        shownText={"Note #" + note.id}
+                        shownText={t("view-note.heading") + note.id}
                         customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
                         size={50} />
-                    <View style={styles.noteTitle}>
-                        <CustomText
-                            shownText="Title: "
-                            customStyle={styles.subject}
-                        />
-                        <CustomText
-                            shownText={note.title}
-                            customStyle={styles.subject}
-                        />
-                    </View>
                     <CustomText
-                        shownText="Note:"
+                        shownText={note.title}
                         customStyle={styles.subject}
                     />
                     <CustomText
@@ -76,7 +73,7 @@ export const Note = ({ navigation, route }) => {
                     />
                     <CustomButton
                         icon="md-share-social"
-                        buttonText="Share this note"
+                        buttonText={t("view-note.share-button")}
                         onPress={onShare}
                         customStyle={styles.shareButton} />
                 </View>
@@ -97,6 +94,7 @@ const styles = StyleSheet.create({
     },
     subject: {
         fontSize: 30,
+        marginBottom: 20,
     },
     content: {
         fontSize: 20,
