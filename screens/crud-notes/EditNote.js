@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, TextInput, Alert } from "react-native";
+import { StyleSheet, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
 import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
@@ -51,40 +51,46 @@ export const EditNote = ({ route, navigation }) => {
     }, [])
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-            <Heading
-                shownText={t("edit-note.heading")}
-                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
-                size={50} />
-            <TextInput
-                style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
-                value={title}
-                onChangeText={changeTitle}
-                placeholderTextColor={theme.navigation.inactive}
-                placeholder={t("edit-note.title-input-placeholder")}
-            />
-            <TextInput
-                style={[styles.input, styles.inputMulti, { color: theme.textColor, borderColor: theme.textColor }]}
-                value={text}
-                multiline
-                numberOfLines={6}
-                onChangeText={changeText}
-                placeholderTextColor={theme.navigation.inactive}
-                placeholder={t("edit-note.text-input-placeholder")}
-            />
-            <CustomButton
-                buttonText={t("edit-note.save-button")}
-                icon="md-checkmark-circle"
-                onPress={() => updateItem(id)} />
-        </SafeAreaView>
+        <KeyboardAvoidingView behavior="padding" style={[styles.noPadding, { backgroundColor: theme.backgroundColor }]}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+                    <Heading
+                        shownText={t("edit-note.heading")}
+                        customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
+                        size={50} />
+                    <TextInput
+                        style={[styles.input, { color: theme.textColor, borderColor: theme.textColor }]}
+                        value={title}
+                        onChangeText={changeTitle}
+                        placeholderTextColor={theme.navigation.inactive}
+                        placeholder={t("edit-note.title-input-placeholder")}
+                    />
+                    <TextInput
+                        style={[styles.input, styles.inputMulti, { color: theme.textColor, borderColor: theme.textColor }]}
+                        value={text}
+                        multiline
+                        numberOfLines={6}
+                        onChangeText={changeText}
+                        placeholderTextColor={theme.navigation.inactive}
+                        placeholder={t("edit-note.text-input-placeholder")}
+                    />
+                    <CustomButton
+                        buttonText={t("edit-note.save-button")}
+                        icon="md-checkmark-circle"
+                        onPress={() => updateItem(id)} />
+                </SafeAreaView>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
+    noPadding: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         paddingHorizontal: 30,
-        backgroundColor: "#fff",
     },
     screenHeading: {
         borderBottomWidth: 4,
