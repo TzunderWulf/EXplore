@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ubuntu_500Medium } from '@expo-google-fonts/ubuntu';
 import { Koulen_400Regular } from '@expo-google-fonts/koulen';
 import { useFonts } from 'expo-font';
@@ -21,7 +22,7 @@ i18n.translations = {
   "de-DE": de,
 }
 
-i18n.locale = Localization.locale;
+
 i18n.fallbacks = true;
 
 const db = SQLite.openDatabase("db.testDb")
@@ -36,8 +37,23 @@ export default function App() {
     });
   }
 
+  // get userLocalePreference
+
+  const getLocale = async () => {
+    const userLocalePreference = await AsyncStorage.getItem("userLocalePreference");
+    if (userLocalePreference != null) {
+      // Select the already set preference for language
+      i18n.locale = userLocalePreference;
+    } else {
+      // Get set locale and save preference
+      i18n.locale = Localization.locale;
+      await AsyncStorage.setItem("userLocalePreference", i18n.locale);
+    }
+  }
+
   useEffect(() => {
     initDatabase();
+    getLocale();
   }, [])
 
   let [fontsLoaded, error] = useFonts({

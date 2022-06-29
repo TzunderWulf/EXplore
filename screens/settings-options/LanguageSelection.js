@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from "i18n-js";
 
 import { useTheme } from '../../themes/themesProvider';
@@ -24,6 +25,11 @@ export const LanguageSelection = ({ navigation }) => {
     }
     ];
 
+    const saveLocale = async () => {
+        // Get new locale and save preference
+        await AsyncStorage.setItem("userLocalePreference", i18n.locale);
+    }
+
     const t = (key) => { return i18n.t(key) }
 
     /**
@@ -39,6 +45,7 @@ export const LanguageSelection = ({ navigation }) => {
                     buttonText={t(`language-selection.avaiable-languages.${item.name}`)}
                     onPress={() => {
                         i18n.locale = item.name;
+                        saveLocale();
                         navigation.navigate("Settings");
                     }} />
             </View>
