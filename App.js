@@ -22,8 +22,6 @@ i18n.translations = {
   "de-DE": de,
 };
 
-i18n.fallbacks = "en-US";
-
 const db = SQLite.openDatabase("db.testDb");
 
 export default function App() {
@@ -50,6 +48,7 @@ export default function App() {
       // Get set locale and save preference
       i18n.locale = Localization.locale;
       await AsyncStorage.setItem("userLocalePreference", i18n.locale);
+      i18n.fallbacks = true;
     }
   }
 

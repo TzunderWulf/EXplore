@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Alert, View } from "react-native";
+import { StyleSheet, Alert, View, ScrollView } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
@@ -28,37 +28,39 @@ export const Settings = ({ navigation }) => {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-            <Heading
-                shownText={t("settings.heading")}
-                customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
-                size={50} />
-            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
+            <ScrollView>
                 <Heading
-                    shownText={t("settings.option-themes")}
-                    size={30} />
-                <CustomButton
-                    buttonText={theme.themeMode !== "default" ? t("settings.change-dark-theme-button") : t("settings.change-light-theme-button")}
-                    onPress={changeTheme} />
-            </View>
-            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
-                <Heading
-                    shownText={t("settings.option-notes")}
-                    size={30} />
-                <CustomButton
-                    buttonText={t("settings.remove-notes-button")}
-                    onPress={() => {
-                        removeItems();
-                        Alert.alert("Removed all notes", "All notes have been removed.")
-                    }} />
-            </View>
-            <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
-                <Heading
-                    shownText={t("settings.option-languages")}
-                    size={30} />
-                <CustomButton
-                    buttonText={t("settings.change-language-button")}
-                    onPress={() => navigation.navigate("Language Selection")} />
-            </View>
+                    shownText={t("settings.heading")}
+                    customStyle={[styles.screenHeading, { borderBottomColor: theme.textColor }]}
+                    size={50} />
+                <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
+                    <Heading
+                        shownText={t("settings.option-themes")}
+                        size={30} />
+                    <CustomButton
+                        buttonText={theme.themeMode !== "default" ? t("settings.change-dark-theme-button") : t("settings.change-light-theme-button")}
+                        onPress={changeTheme} />
+                </View>
+                <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
+                    <Heading
+                        shownText={t("settings.option-notes")}
+                        size={30} />
+                    <CustomButton
+                        buttonText={t("settings.remove-notes-button")}
+                        onPress={() => {
+                            removeItems();
+                            Alert.alert("Removed all notes", "All notes have been removed.")
+                        }} />
+                </View>
+                <View style={[styles.setting, { borderBottomColor: theme.textColor }]}>
+                    <Heading
+                        shownText={t("settings.option-languages")}
+                        size={30} />
+                    <CustomButton
+                        buttonText={t("settings.change-language-button")}
+                        onPress={() => navigation.navigate("Language Selection")} />
+                </View>
+            </ScrollView>
         </View>
     );
 }
