@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+    StyleSheet, SafeAreaView, TextInput, Alert, KeyboardAvoidingView, TouchableWithoutFeedback,
+    Keyboard, Platform
+} from "react-native";
 import * as SQLite from "expo-sqlite";
 import i18n from "i18n-js";
 
@@ -37,7 +40,8 @@ export const AddNote = ({ navigation }) => {
     }, [])
 
     return (
-        <KeyboardAvoidingView behavior="padding" style={[styles.noPadding, { backgroundColor: theme.backgroundColor }]}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={[styles.noPadding, { backgroundColor: theme.backgroundColor }]}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <SafeAreaView style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
                     <Heading
