@@ -33,7 +33,6 @@ export const EditNote = ({ route, navigation }) => {
             db.transaction(tx => {
                 tx.executeSql("UPDATE items SET title = ?, text = ? where id = ?", [title, text, id])
             })
-            console.log("changed")
             navigation.navigate("Notes");
         }
     }

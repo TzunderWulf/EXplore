@@ -25,7 +25,6 @@ export const Note = ({ navigation, route }) => {
         db.transaction(tx => {
             tx.executeSql("SELECT * FROM items WHERE id = ?", [id], (_, { rows: { _array } }) => setNote(_array[0]))
         });
-
     }
 
     /**

@@ -44,8 +44,8 @@ export const List = ({ navigation }) => {
                     buttonText={t("list.locate-button")}
                     icon="md-location"
                     onPress={() => navigation.navigate('Map', {
-                        latitude:
-                            item.lat, longitude: item.long
+                        latitude: item.lat,
+                        longitude: item.long
                     })} />
             </View>
         );
